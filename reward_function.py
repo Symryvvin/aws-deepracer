@@ -29,6 +29,7 @@ def reward_function(params):
     # if car make serious mistakes it get minimum coefficient and result reward drops
     # max coefficient of each function can be optimized through learning
     MIN_COEFF = 0.05
+    NO_CHANGE_COEF = 1.0
     MAX_REWARD = 1.0
     ABS_STEERING_THRESHOLD = 15
 
@@ -60,7 +61,7 @@ def reward_function(params):
     def abs_steering_coef():
         if abs(steering) > ABS_STEERING_THRESHOLD:
             return 0.8
-        return 1.0
+        return NO_CHANGE_COEF
 
     # if car move with near maximum speed on straight line, while abs(steering) is minimum
     def moving_on_straight_line_faster_coef():
@@ -74,6 +75,7 @@ def reward_function(params):
                 return 1.2
             elif round(speed) == MIN_SPEED:
                 return 0.9
+        return NO_CHANGE_COEF
 
     # if car move to right turn based on waypoint and coordinates
     # if car move with calm speed on turns
