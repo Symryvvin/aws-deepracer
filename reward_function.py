@@ -119,8 +119,8 @@ def reward_function(params):
         return MAX_REWARD
 
     def car_move_in_right_direction():
-        next_wp = closest_waypoints[1]
-        prev_wp = closest_waypoints[0]
+        next_wp = waypoints[closest_waypoints[1]]
+        prev_wp = waypoints[closest_waypoints[0]]
 
         direction_diff = abs(track_heading(prev_wp, next_wp) - heading)
         if direction_diff > 180:
