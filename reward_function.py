@@ -83,6 +83,6 @@ def reward_function(params):
     reward *= stay_on_track_coef()
     reward *= follow_center_line_coef()
     reward *= abs_steering_coef()
-    reward *= moving_on_straight_line_faster()
+    reward *= moving_on_straight_line_faster_coef()
 
     return float(reward)
