@@ -1,5 +1,4 @@
 def reward_function(params):
-
     # x and y  - The position of the vehicle on the track
     # heading - Orientation of the vehicle on the track
     # waypoints - List of waypoint coordinates
@@ -33,11 +32,16 @@ def reward_function(params):
     MAX_REWARD = 1.0
     ABS_STEERING_THRESHOLD = 15
 
+    MAX_SPEED = 4.0
+    MIN_SPEED = 1.0
+
+    # if car on track
     def stay_on_track_coef():
         if all_wheels_on_track and (0.5 * track_width - distance_from_center) >= 0.05:
             return 1.3
         return MIN_COEFF
 
+    # if near to center line
     def follow_center_line_coef():
         closer_to_center = 0.1 * track_width
         allowed_distance = 0.25 * track_width
@@ -52,14 +56,33 @@ def reward_function(params):
         else:
             return MIN_COEFF
 
+    # if car not zig-zag
     def abs_steering_coef():
         if abs(steering) > ABS_STEERING_THRESHOLD:
             return 0.8
         return 1.0
 
+    # if car move with near maximum speed on straight line, while abs(steering) is minimum
+    def moving_on_straight_line_faster_coef():
+        if abs(steering) < 0.1:
+            if round(speed) == MAX_SPEED:
+                return 1.4
+            elif round(speed) == MIN_SPEED:
+                return 0.9
+        elif abs(steering) < 0.2:
+            if round(speed) == MAX_SPEED - 1:
+                return 1.2
+            elif round(speed) == MIN_SPEED:
+                return 0.9
+
+    # if car move to right turn based on waypoint and coordinates
+    # if car move with calm speed on turns
+    # if car end track with minimum steps
+
     reward = MAX_REWARD
     reward *= stay_on_track_coef()
     reward *= follow_center_line_coef()
     reward *= abs_steering_coef()
+    reward *= moving_on_straight_line_faster()
 
     return float(reward)
