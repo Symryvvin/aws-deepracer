@@ -31,8 +31,8 @@ def reward_function(params):
     MIN_REWARD = 1e-3
     MAX_REWARD = 1.0
 
-    MAX_SPEED = 4.0
-    MIN_SPEED = 1.0
+    MAX_SPEED = 3.0
+    MIN_SPEED = 0.5
 
     def stay_car_on_track():
         if all_wheels_on_track and (0.5 * track_width - distance_from_center) >= 0.05:
@@ -66,11 +66,11 @@ def reward_function(params):
                 return MAX_REWARD * 1.4
             elif round(speed) == MIN_SPEED:
                 return MAX_REWARD * 0.9
-        elif abs(steering) < 0.2:
-            if round(speed) == MAX_SPEED - 1:
-                return MAX_REWARD * 1.2
-            elif round(speed) == MIN_SPEED:
-                return MAX_REWARD * 0.9
+        # elif abs(steering) < 0.2:
+        #     if round(speed) == MAX_SPEED - 1:
+        #         return MAX_REWARD * 1.2
+        #     elif round(speed) == MIN_SPEED:
+        #         return MAX_REWARD * 0.9
         return MAX_REWARD
 
     def track_heading(prev_wp, next_wp):
@@ -114,7 +114,7 @@ def reward_function(params):
 
         if abs_turn_angle > 20 and MAX_SPEED - 1 > speed > MIN_SPEED + 1:
             return MAX_REWARD * 1.2
-        elif abs_turn_angle > 40 and MAX_SPEED - 1 > speed > MIN_SPEED + 0.5:
+        elif abs_turn_angle > 40 and MAX_SPEED - 2 > speed > MIN_SPEED + 0.5:
             return MAX_REWARD * 1.2
         return MAX_REWARD
 
@@ -135,9 +135,9 @@ def reward_function(params):
     reward = stay_car_on_track()
     reward += follow_near_center_track_line()
     reward += abs_steering()
-    reward += moving_on_straight_line_faster()
     reward += left_of_center_when_turn()
     reward += slow_speed_when_turn()
     reward += car_move_in_right_direction()
+    reward += moving_on_straight_line_faster()
 
     return float(reward)
