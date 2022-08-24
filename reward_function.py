@@ -63,7 +63,7 @@ def reward_function(params):
     def moving_on_straight_line_faster():
         if abs(steering) < 0.1:
             if round(speed) == MAX_SPEED:
-                return MAX_REWARD * 1.4
+                return MAX_REWARD * 1.3
             elif round(speed) == MIN_SPEED:
                 return MAX_REWARD * 0.9
         # elif abs(steering) < 0.2:
@@ -97,14 +97,14 @@ def reward_function(params):
 
         if turn_angle > 0:
             if is_left_of_center:
-                return MAX_REWARD * 1.2
+                return MAX_REWARD * 1.3
             else:
                 return MAX_REWARD * 0.7
         elif turn_angle < 0:
             if is_left_of_center:
                 return MAX_REWARD * 0.7
             else:
-                return MAX_REWARD * 1.2
+                return MAX_REWARD * 1.3
 
         return MAX_REWARD
 
@@ -128,7 +128,7 @@ def reward_function(params):
 
         DIRECTION_THRESHOLD = 10.0
         if direction_diff > DIRECTION_THRESHOLD:
-            return MAX_REWARD * 0.5
+            return MAX_REWARD * 0.4
 
         return MAX_REWARD
 
