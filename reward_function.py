@@ -32,7 +32,7 @@ def reward_function(params):
     MAX_REWARD = 1.0
 
     MAX_SPEED = 4.0
-    MIN_SPEED = 0.5
+    MIN_SPEED = 1.5
 
     def stay_car_on_track():
         if all_wheels_on_track and (0.5 * track_width - distance_from_center) >= 0.05:
@@ -109,7 +109,7 @@ def reward_function(params):
 
         if abs_turn_angle > 40 and MAX_SPEED - 0.5 > speed > MIN_SPEED + 1.5:
             return MAX_REWARD * 1.3
-        elif abs_turn_angle > 70 and MAX_SPEED - 1.25 > speed > MIN_SPEED + 1:
+        elif abs_turn_angle > 70 and MAX_SPEED - 1 > speed > MIN_SPEED + 0.5:
             return MAX_REWARD * 1.2
         return MAX_REWARD
 
