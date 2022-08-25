@@ -61,11 +61,8 @@ def reward_function(params):
         return MAX_REWARD
 
     def moving_on_straight_line_faster():
-        if abs(steering) < 0.1:
-            if round(speed) == MAX_SPEED:
-                return MAX_REWARD * 1.3
-            elif round(speed) == MIN_SPEED:
-                return MAX_REWARD * 0.9
+        if abs(steering) < 0.1 and speed > 1.5:
+            return MAX_REWARD * 1.3
         return MAX_REWARD
 
     def track_heading(prev_wp, next_wp):
@@ -125,6 +122,13 @@ def reward_function(params):
         if direction_diff > DIRECTION_THRESHOLD:
             return MAX_REWARD * 0.4
 
+        return MAX_REWARD
+    
+    def go_faster():
+        if speed < 1.5:
+            return MAX_REWARD *= 0.75
+        elif speed > 3:
+            return MAX_REWARD *= 1.25
         return MAX_REWARD
 
     reward = stay_car_on_track()
