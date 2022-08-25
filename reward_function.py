@@ -126,9 +126,9 @@ def reward_function(params):
     
     def go_faster():
         if speed < 1.5:
-            return MAX_REWARD *= 0.75
+            return MAX_REWARD * 0.75
         elif speed > 3:
-            return MAX_REWARD *= 1.25
+            return MAX_REWARD * 1.25
         return MAX_REWARD
 
     reward = stay_car_on_track()
@@ -138,5 +138,6 @@ def reward_function(params):
     reward += slow_speed_when_turn()
     reward += car_move_in_right_direction()
     reward += moving_on_straight_line_faster()
+    reward += go_faster()
 
     return float(reward)
