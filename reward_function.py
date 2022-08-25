@@ -47,7 +47,7 @@ def reward_function(params):
         if distance_from_center <= closer_to_center:
             return MAX_REWARD * 1.1
         elif distance_from_center <= allowed_distance:
-            return MAX_REWARD * 0.5
+            return MAX_REWARD * 0.7
         elif distance_from_center <= close_to_off_track:
             return MAX_REWARD * 0.2
         else:
@@ -57,7 +57,7 @@ def reward_function(params):
         ABS_STEERING_THRESHOLD = 15
 
         if abs(steering) > ABS_STEERING_THRESHOLD:
-            return MAX_REWARD * 0.8
+            return MAX_REWARD * 0.7
         return MAX_REWARD
 
     def moving_on_straight_line_faster():
@@ -107,9 +107,9 @@ def reward_function(params):
         next_wp = closest_waypoints[1]
         abs_turn_angle = abs(track_turn_angle(next_wp))
 
-        if abs_turn_angle > 40 and MAX_SPEED - 1 > speed > MIN_SPEED + 1:
-            return MAX_REWARD * 1.2
-        elif abs_turn_angle > 70 and MAX_SPEED - 2 > speed > MIN_SPEED + 0.5:
+        if abs_turn_angle > 40 and MAX_SPEED - 0.5 > speed > MIN_SPEED + 1.5:
+            return MAX_REWARD * 1.3
+        elif abs_turn_angle > 70 and MAX_SPEED - 1.25 > speed > MIN_SPEED + 1:
             return MAX_REWARD * 1.2
         return MAX_REWARD
 
