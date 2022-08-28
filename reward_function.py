@@ -33,6 +33,18 @@ def reward_function(params):
     ABS_STEERING_THRESHOLD = 15
     DIRECTION_THRESHOLD = 10.0
     
+    def track_heading(prev_wp, next_wp):
+        track_heading_in_rads = math.atan2(next_wp[1] - prev_wp[1], next_wp[0] - prev_wp[0])
+        return math.degrees(track_heading_in_rads)
+
+    def wp_by_index(index):
+        if index > (len(waypoints) - 1):
+            return waypoints[index - (len(waypoints))]
+        elif index < 0:
+            return waypoints[len(waypoints) + index]
+        else:
+            return waypoints[index]
+    
     # Low reward by default
     reward = 1e-3
     
@@ -67,17 +79,5 @@ def reward_function(params):
 
     if (turn_angle > 0 and is_left_of_center) or (turn_angle < 0 and not is_left_of_center):
       reward *= 1.3
-
-    def track_heading(prev_wp, next_wp):
-        track_heading_in_rads = math.atan2(next_wp[1] - prev_wp[1], next_wp[0] - prev_wp[0])
-        return math.degrees(track_heading_in_rads)
-
-    def wp_by_index(index):
-        if index > (len(waypoints) - 1):
-            return waypoints[index - (len(waypoints))]
-        elif index < 0:
-            return waypoints[len(waypoints) + index]
-        else:
-            return waypoints[index]
 
     return float(reward)
